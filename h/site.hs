@@ -15,13 +15,6 @@ main = hakyll $ do
         route   idRoute
         compile compressCssCompiler
 
-    --match (fromList ["about.rst", "contact.markdown"]) $ do
-    match (fromList ["contact.markdown"]) $ do
-        route   $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls
-
     match "posts/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler
@@ -34,8 +27,8 @@ main = hakyll $ do
         compile $ do
             posts <- recentFirst =<< loadAll "posts/*"
             let blogCtx =
-                    listField "posts" postCtx (return posts) 	`mappend`
-                    constField "title" "Blog"            		`mappend`
+                    listField "posts" postCtx (return posts) `mappend`
+                    constField "title" "Blog" `mappend`
                     defaultContext
 
             makeItem ""
@@ -56,6 +49,20 @@ main = hakyll $ do
                 >>= applyAsTemplate indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
                 >>= relativizeUrls
+
+
+    create["contact.html"] $ do
+        route idRoute
+        compile $ do
+            let contactCtx =
+                    constField "title" "Where am I?" `mappend`
+                    defaultContext
+            makeItem ""
+                >>= loadAndApplyTemplate "templates/contact.html" contactCtx
+                >>= loadAndApplyTemplate "templates/default.html" contactCtx
+                >>= relativizeUrls
+            
+
 
     match "templates/*" $ compile templateBodyCompiler
 
