@@ -1,1 +1,6 @@
-*/**/**/.DS_Store
+*/**/.DS_Store
+_site
+_cache
+.stack-work
+fontawesome
+dist-newstyle
