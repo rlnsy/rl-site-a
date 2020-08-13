@@ -1,2 +1,2 @@
 script:
-  - curl http://rowanlindsay.com/deploy
+  - bash test-and-deploy.sh
